@@ -4,4 +4,5 @@ export interface Game {
   description: string;
   icon: string;
   color: string;
+  category: "puzzle" | "arcade" | "card" | "word" | "number";
 }

@@ -11,7 +11,9 @@ import { GameCard } from "../components/GameCard";
 import { useMemoryGame } from "../hooks/useMemoryGame";
 import { GameLevel, LEVEL_CONFIGS } from "../utils/gameLogic";
 
-export const MemoryGameScreen: React.FC = () => {
+export const MemoryGameScreen: React.FC<{ onBack?: () => void }> = ({
+  onBack,
+}) => {
   const [selectedLevel, setSelectedLevel] = useState<GameLevel>("easy");
   const [gameStarted, setGameStarted] = useState(false);
   const [userId] = useState<string | null>(null); // null = not logged in, saves locally
@@ -49,7 +51,12 @@ export const MemoryGameScreen: React.FC = () => {
   if (!gameStarted) {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>🎮 Memory Game</Text>
+        {onBack && (
+          <TouchableOpacity style={styles.backBtn} onPress={onBack}>
+            <Text style={styles.backBtnTxt}>← Back</Text>
+          </TouchableOpacity>
+        )}
+        <Text style={styles.title}>🧠 Memory Game</Text>
         <Text style={styles.subtitle}>Select Level</Text>
 
         <View style={styles.levelContainer}>
@@ -343,5 +350,18 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  backBtn: {
+    alignSelf: "flex-start",
+    backgroundColor: "#0f3460",
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 10,
+    marginBottom: 16,
+  },
+  backBtnTxt: {
+    color: "#e94560",
+    fontWeight: "700",
+    fontSize: 14,
   },
 });
